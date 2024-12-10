@@ -27,5 +27,13 @@ class Event {
       this.eventList.SpecialDay = true;
     }
   }
+
+  static processEvent(date) {
+    this.isChristmasDday(date);
+    this.isWeekend(date);
+    this.isSpecialDay(date);
+
+    return this.eventList;
+  }
 }
 export default Event;

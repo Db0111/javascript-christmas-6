@@ -1,6 +1,6 @@
-import InputValidator from './InputValidator.js';
-import { formatRegex } from './constants/Constants.js';
-import ErrorMessage from './constants/ErrorMessage.js';
+import InputValidator from '../utils/InputValidator.js';
+import { formatRegex } from '../constants/Constants.js';
+import ErrorMessage from '../constants/ErrorMessage.js';
 
 class Menu {
   #input;
@@ -61,7 +61,7 @@ class Menu {
   static isBelowLimit(splittedInput) {
     let total = 0;
     for (const quantity in Object.values(splittedInput)) {
-      total += quantity;
+      total += Number(quantity);
     }
     if (total > 20) {
       throw new Error(ErrorMessage.EXCEED_ORDER_LIMIT);
