@@ -9,13 +9,6 @@ class Menu {
     this.#input = input;
   }
 
-  static menuList = {
-    appetizer: { 양송이스프: 6000, 타파스: 5500, 시저샐러드: 8000 },
-    main: { 티본스테이크: 55000, 바비큐립: 54000, 해산물파스타: 35000, 크리스마스파스타: 25000 },
-    dessert: { 초코케이크: 15000, 아이스크림: 5000 },
-    drink: { 제로콜라: 3000, 레드와인: 60000, 샴페인: 25000 },
-  };
-
   static validateInput(input) {
     InputValidator.isEmpty(input);
     if (!formatRegex.test(input)) {
@@ -33,33 +26,36 @@ class Menu {
   }
 
   static validateSplittedInput(splittedInput) {
-    this.isValidMenu(splittedInput);
-    this.isValidNum(splittedInput);
-    this.isNotDuplicated(splittedInput);
-    this.isBelowLimit(splittedInput);
-  }
-
-  static isValidMenu(splittedInput) {
-    for (const name in Object.keys(splittedInput)) {
-      if (name in this.menuList === false) {
-        throw new Error(ErrorMessage.NO_MENU);
-      }
+    // this.isValidMenu(splittedInput);
+    if (this.isValidNum(splittedInput) && this.isNotDuplicated(splittedInput) && this.isBelowLimit(splittedInput)) {
+      return splittedInput;
     }
   }
 
+  //   static isValidMenu(splittedInput) {
+  //     const menus = Object.values(splittedInput)
+  //     for (const menu of menus ) {
+  //       if (nt === false) {
+  //         throw new Error(ErrorMessage.NO_MENU);
+  //       }
+  //     }
+  //   }
+
   static isValidNum(splittedInput) {
-    for (const quantity in Object.values(splittedInput)) {
+    for (const quantity of Object.values(splittedInput)) {
       if (quantity < 1) {
         throw new Error(ErrorMessage.INVALID_ORDERNUM);
       }
     }
+    return true;
   }
 
   static isNotDuplicated(splittedInput) {
     const orderedMenu = Object.keys(splittedInput);
-    if (orderedMenu !== new Set(orderedMenu)) {
+    if (orderedMenu.length !== new Set(orderedMenu).size) {
       throw new Error(ErrorMessage.DUPLICATED_ORDER);
     }
+    return true;
   }
 
   static isBelowLimit(splittedInput) {
@@ -70,6 +66,7 @@ class Menu {
     if (total > 20) {
       throw new Error(ErrorMessage.EXCEED_ORDER_LIMIT);
     }
+    return true;
   }
 
   //Todo: 음료만 주문시 에러 처리
