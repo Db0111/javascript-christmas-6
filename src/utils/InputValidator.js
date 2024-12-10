@@ -1,5 +1,5 @@
-import { regex } from './constants/Constants.js';
-import ErrorMessage from './constants/ErrorMessage.js';
+import { regex } from '../constants/Constants.js';
+import ErrorMessage from '../constants/ErrorMessage.js';
 
 class InputValidator {
   static isEmpty(input) {
