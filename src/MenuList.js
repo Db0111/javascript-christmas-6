@@ -4,3 +4,5 @@ export const menuList = {
   dessert: { 초코케이크: 15000, 아이스크림: 5000 },
   drink: { 제로콜라: 3000, 레드와인: 60000, 샴페인: 25000 },
 };
+
+export const BonusItem = { 샴페인: 25000 };
