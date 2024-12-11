@@ -10,7 +10,7 @@ class InputValidator {
 
   static isNotANum(input) {
     if (!regex.test(input)) {
-      throw new Error(ErrorMessage.NOT_A_NUMBER);
+      throw new Error(ErrorMessage.INVALID_DATE);
     }
   }
 
