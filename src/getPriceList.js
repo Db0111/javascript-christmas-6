@@ -3,7 +3,7 @@ import { menuList } from './MenuList.js';
 export function findPrice(menuList, itemName) {
   for (const [category, items] of Object.entries(menuList)) {
     if (itemName in items) {
-      return { category, price: items[itemName] }; // category와 price를 함께 반환
+      return { category, price: items[itemName] };
     }
   }
   return null;
@@ -19,7 +19,6 @@ export function getPriceList(orderedList) {
       quantity: Number(quantity),
     };
   }
-  console.log(priceList);
   return priceList;
 }
 
