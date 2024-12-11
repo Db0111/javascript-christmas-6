@@ -1,6 +1,7 @@
 import InputValidator from '../utils/InputValidator.js';
-import { formatRegex } from '../constants/Constants.js';
+import { regex, formatRegex } from '../constants/Constants.js';
 import ErrorMessage from '../constants/ErrorMessage.js';
+import { menuList } from '../MenuList.js';
 
 class Menu {
   #input;
@@ -26,20 +27,27 @@ class Menu {
   }
 
   static validateSplittedInput(splittedInput) {
-    // this.isValidMenu(splittedInput);
-    if (this.isValidNum(splittedInput) && this.isNotDuplicated(splittedInput) && this.isBelowLimit(splittedInput)) {
+    if (
+      this.isMenuItemValid(splittedInput) &&
+      this.isValidNum(splittedInput) &&
+      this.isValidQuantity(splittedInput) &&
+      this.isBelowLimit(splittedInput)
+    ) {
       return splittedInput;
     }
   }
 
-  //   static isValidMenu(splittedInput) {
-  //     const menus = Object.values(splittedInput)
-  //     for (const menu of menus ) {
-  //       if (nt === false) {
-  //         throw new Error(ErrorMessage.NO_MENU);
-  //       }
-  //     }
-  //   }
+  static isMenuItemValid(splittedInput) {
+    const categories = Object.values(menuList);
+    const allItems = categories.flatMap(category => Object.keys(category));
+
+    Object.keys(splittedInput).forEach(item => {
+      if (!allItems.includes(item)) {
+        throw new Error(ErrorMessage.NO_MENU);
+      }
+    });
+    return true;
+  }
 
   static isValidNum(splittedInput) {
     for (const quantity of Object.values(splittedInput)) {
@@ -50,10 +58,11 @@ class Menu {
     return true;
   }
 
-  static isNotDuplicated(splittedInput) {
-    const orderedMenu = Object.keys(splittedInput);
-    if (orderedMenu.length !== new Set(orderedMenu).size) {
-      throw new Error(ErrorMessage.DUPLICATED_ORDER);
+  static isValidQuantity(splittedInput) {
+    for (const quantity of Object.values(splittedInput)) {
+      if (!regex.test(quantity)) {
+        throw new Error(ErrorMessage.INVALID_ORDER);
+      }
     }
     return true;
   }
@@ -69,7 +78,17 @@ class Menu {
     return true;
   }
 
-  //Todo: 음료만 주문시 에러 처리
+  // static isOnlyDrink(splittedInput) {
+  //   const orderedItems = Object.keys(splittedInput);
+  //   const isValidItems = orderedItems.every(item => Object.values(menuList).some(category => item in category));
+  //   if (!isValidItems) {
+  //     throw new Error(ErrorMessage.INVALID_ITEM);
+  //   }
+  //   const isAllDrinks = orderedItems.every(item => item in menuList.drink);
+  //   if (isAllDrinks) {
+  //     throw new Error(ErrorMessage.ONLY_DRINK);
+  //   }
+  // }
 }
 
 export default Menu;
