@@ -2,7 +2,7 @@ import Controller from './Controller/Controller.js';
 
 class App {
   async run() {
-    Controller.processPlan();
+    await Controller.processPlan();
   }
 }
 
